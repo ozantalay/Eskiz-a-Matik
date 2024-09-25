@@ -70,17 +70,31 @@ export default function App() {
         
     4. Yalnızca aşağıdaki koda ekleme yapmalısınız. Bu veya başka bir dosyada başka hiçbir şeyin değiştirilmesine gerek yok
 */
+   const handleMouseEnter=(id)=>{
+    if (mouseDown) {
+      setPixels((prev) =>
+        prev.map((pixel) =>
+          pixel.id === id ? { ...pixel, filled: wantsToDraw } : pixel
+        )
+      );
+    }
+   }
+
 
   const pixelElements = pixels.map((pixel) => (
     <div
       key={pixel.id}
       id={pixel.id}
       className={`pixel ${pixel.filled ? 'filled' : 'empty'}`}
+      onMouseEnter={() => handleMouseEnter(pixel.id)}
     ></div>
   ))
 
   return (
-    <div className='wrapper'>
+    <div className='wrapper'
+    onMouseDown={()=>setMouseDown(true)}
+    onMouseUp={()=>setMouseDown(false)}
+    >
       <div
         className={`sketch-o-matic-container ${
           resetRequested && 'shake-horizontal'
